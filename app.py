@@ -3,6 +3,7 @@ import random
 import csv
 import os
 from openpyxl import Workbook, load_workbook
+import requests
 
 app = Flask(__name__)
 
@@ -118,6 +119,17 @@ def daftar():
         if not file_ada:  
             writer.writerow(['nomor', 'nama', 'umur', 'alamat', 'hp'])
         writer.writerow([nomor, nama, umur, alamat, hp])
+        url_sheet = "https://script.google.com/macros/s/AKfycbxEzBr2jrfOoWYmBWhGj7gYDYNqXvjhBFgDmLmz41CnHEwYnv2oyHZ3Mp6UBsTZY1FlLw/exec"
+
+        data_kirim = {
+            "nomor": nomor,
+            "nama": nama,
+            "umur": umur,
+            "alamat": alamat,
+            "hp": hp
+        }
+
+        requests.post(url_sheet, json=data_kirim)
 
     return f'''
     <h1>Pendaftaran Berhasil</h1>
